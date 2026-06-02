@@ -35,7 +35,7 @@ const BUTTON_NORMAL_COLOR = Color.WHITE
 @onready var _tool_btn_selection: FlatTextureButton = $Console/Left/SelectionToolButton
 
 var _last_active_tool_button: FlatTextureButton
-
+var _current_tool : Types.Tool = Types.Tool.BRUSH
 # -------------------------------------------------------------------------------------------------
 func _ready() -> void:
 	# Set inintial values
@@ -77,7 +77,13 @@ func enable_tool(tool_type: Types.Tool) -> void:
 		Types.Tool.RECTANGLE: btn = _tool_btn_rectangle
 		Types.Tool.CIRCLE: btn = _tool_btn_circle
 	
+	# If eraser is selected, change tool to brush
+	if tool_type == Types.Tool.ERASER && _current_tool == Types.Tool.ERASER:
+		btn = _tool_btn_brush
+		tool_type = Types.Tool.BRUSH
+	
 	btn.toggle()
+	_current_tool = tool_type
 	_change_active_tool_button(btn)
 	tool_changed.emit(tool_type)
 
@@ -141,31 +147,37 @@ func _on_brush_size_changed(value: float) -> void:
 # -------------------------------------------------------------------------------------------------
 func _on_brush_tool_pressed() -> void:
 	_change_active_tool_button(_tool_btn_brush)
+	_current_tool = Types.Tool.BRUSH
 	tool_changed.emit(Types.Tool.BRUSH)
 
 # -------------------------------------------------------------------------------------------------
 func _on_rectangle_tool_pressed() -> void:
 	_change_active_tool_button(_tool_btn_rectangle)
+	_current_tool = Types.Tool.RECTANGLE
 	tool_changed.emit(Types.Tool.RECTANGLE)
 
 # -------------------------------------------------------------------------------------------------
 func _on_circle_tool_pressed() -> void:
 	_change_active_tool_button(_tool_btn_circle)
+	_current_tool = Types.Tool.CIRCLE
 	tool_changed.emit(Types.Tool.CIRCLE)	
 	
 # -------------------------------------------------------------------------------------------------
 func _on_line_tool_pressed() -> void:
 	_change_active_tool_button(_tool_btn_line)
+	_current_tool = Types.Tool.LINE
 	tool_changed.emit(Types.Tool.LINE)
 
 # -------------------------------------------------------------------------------------------------
 func _on_eraser_tool_pressed() -> void:
 	_change_active_tool_button(_tool_btn_eraser)
+	_current_tool = Types.Tool.ERASER
 	tool_changed.emit(Types.Tool.ERASER)
 
 # -------------------------------------------------------------------------------------------------
 func _on_select_tool_pressed() -> void:
 	_change_active_tool_button(_tool_btn_selection)
+	_current_tool = Types.Tool.SELECT
 	tool_changed.emit(Types.Tool.SELECT)
 
 # -------------------------------------------------------------------------------------------------
@@ -204,3 +216,4 @@ func _update_undo_redo_buttons() -> void:
 	
 	_undo_button.set_is_disabled(!active_project.undo_redo.has_undo())
 	_redo_button.set_is_disabled(!active_project.undo_redo.has_redo())
+
