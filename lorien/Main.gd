@@ -21,6 +21,7 @@ extends Control
 @onready var _delete_palette_window: Window = $DeletePaletteWindow
 @onready var _edit_palette_window: Window = $EditPaletteWindow
 @onready var _edit_palette_dialog: EditPaletteDialog = $EditPaletteWindow/EditPaletteDialog
+@onready var _quick_color_select : QuickColorSelect
 
 var _last_input_time := 0
 var _ui_visible := true 
@@ -46,6 +47,9 @@ func _ready() -> void:
 	var driver: String = Settings.get_value(Settings.GENERAL_TABLET_DRIVER, DisplayServer.tablet_get_current_driver())
 	DisplayServer.tablet_set_current_driver(driver)
 	
+	# Get quick_color_select reference
+	_quick_color_select = _toolbar.get_node("Console/Left/QuickColorSelect")
+	
 	# Signals
 	get_window().files_dropped.connect(_on_files_dropped)
 	
@@ -54,6 +58,7 @@ func _ready() -> void:
 	
 	_brush_color_picker.closed.connect(_on_BrushColorPicker_closed)
 	_brush_color_picker.color_changed.connect(_on_BrushColorPicker_color_changed)
+	_quick_color_select.color_changed.connect(_on_BrushColorPicker_color_changed)
 	
 	_new_palette_dialog.new_palette_created.connect(_on_NewPaletteDialog_new_palette_created)
 	_delete_palette_dialog.palette_deleted.connect(_on_DeletePaletteDialog_palette_deleted)
@@ -559,18 +564,21 @@ func _on_BrushColorPicker_closed() -> void:
 func _on_NewPaletteDialog_new_palette_created(palette: Palette) -> void:
 	PaletteManager.set_active_palette(palette)
 	_brush_color_picker.update_palettes()
+	_quick_color_select.update_palettes()
 
 # --------------------------------------------------------------------------------------------------
 func _update_brush_color() -> void:
 	var color_index: int = min(_brush_color_picker.get_active_color_index(), 
 		PaletteManager.get_active_palette().colors.size() - 1)
 	_brush_color_picker.update_palettes(color_index)
+	_quick_color_select.update_palettes()
 	_toolbar.set_brush_color(_brush_color_picker.get_active_color())
 	_canvas.set_brush_color(_brush_color_picker.get_active_color())
 
 # --------------------------------------------------------------------------------------------------
 func _on_EditPaletteDialog_palette_changed() -> void:
 	_update_brush_color()
+	
 
 # --------------------------------------------------------------------------------------------------
 func _on_DeletePaletteDialog_palette_deleted() -> void:

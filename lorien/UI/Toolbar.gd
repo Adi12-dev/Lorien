@@ -77,13 +77,13 @@ func enable_tool(tool_type: Types.Tool) -> void:
 		Types.Tool.RECTANGLE: btn = _tool_btn_rectangle
 		Types.Tool.CIRCLE: btn = _tool_btn_circle
 	
-	# If eraser is selected, change tool to brush
+	# if eraser is selected, change tool to brush
 	if tool_type == Types.Tool.ERASER && _current_tool == Types.Tool.ERASER:
 		btn = _tool_btn_brush
 		tool_type = Types.Tool.BRUSH
 	
-	btn.toggle()
 	_current_tool = tool_type
+	btn.toggle()
 	_change_active_tool_button(btn)
 	tool_changed.emit(tool_type)
 
@@ -216,4 +216,3 @@ func _update_undo_redo_buttons() -> void:
 	
 	_undo_button.set_is_disabled(!active_project.undo_redo.has_undo())
 	_redo_button.set_is_disabled(!active_project.undo_redo.has_redo())
-
