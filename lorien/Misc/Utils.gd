@@ -30,17 +30,7 @@ func is_mouse_on_window(window: Window) -> bool:
 
 # -------------------------------------------------------------------------------------------------
 func calculate_rect(start_pos: Vector2, end_pos: Vector2) -> Rect2:
-	var area := Rect2(start_pos, end_pos - start_pos)
-	if end_pos.x < start_pos.x && end_pos.y < start_pos.y:
-		area.position = end_pos
-		area.end = start_pos
-	elif end_pos.x < start_pos.x && end_pos.y > start_pos.y:
-		area.position = Vector2(end_pos.x, start_pos.y)
-		area.end = Vector2(start_pos.x, end_pos.y)
-	elif end_pos.x > start_pos.x && end_pos.y < start_pos.y:
-		area.position = Vector2(start_pos.x, end_pos.y)
-		area.end = Vector2(end_pos.x, start_pos.y)
-	return area
+	return Rect2(start_pos, end_pos - start_pos).abs()
 
 # -------------------------------------------------------------------------------------------------
 func calculte_bounding_boxes(strokes: Array[BrushStroke], margin: float = 0.0) -> Dictionary:
