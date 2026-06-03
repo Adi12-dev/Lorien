@@ -1,8 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://c0ral10lvpo7f"]
+[gd_scene format=3 uid="uid://c0ral10lvpo7f"]
 
 [ext_resource type="Texture2D" uid="uid://c4kv3i7fmom58" path="res://Assets/Icons/save_file.png" id="1"]
 [ext_resource type="Texture2D" uid="uid://dxi6gc6npiskq" path="res://Assets/Icons/open_file.png" id="2"]
-[ext_resource type="Script" path="res://UI/Toolbar.gd" id="3"]
+[ext_resource type="Script" uid="uid://dderd8yvbgf8m" path="res://UI/Toolbar.gd" id="3"]
 [ext_resource type="Texture2D" uid="uid://b14r0skgpftxj" path="res://Assets/Icons/new_file.png" id="4"]
 [ext_resource type="Texture2D" uid="uid://see51v4hg68f" path="res://Assets/Icons/redo.png" id="6"]
 [ext_resource type="Texture2D" uid="uid://h54g8ofkc3p8" path="res://Assets/Icons/undo.png" id="7"]
@@ -10,8 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://bynefqnt8pdby" path="res://Assets/Icons/eraser_tool.png" id="9"]
 [ext_resource type="Texture2D" uid="uid://7a3xk8n0q24k" path="res://Assets/Icons/rectangle_tool.png" id="10"]
 [ext_resource type="Texture2D" uid="uid://bn1qdw0v30np0" path="res://Assets/Icons/line_tool.png" id="11"]
-[ext_resource type="Script" path="res://UI/Components/FlatTextureButton.gd" id="13"]
+[ext_resource type="Script" uid="uid://bc8c1qy2xs4kn" path="res://UI/Components/FlatTextureButton.gd" id="13"]
 [ext_resource type="Theme" uid="uid://u5qnpgxqykiv" path="res://UI/Themes/dark/theme.tres" id="15"]
+[ext_resource type="Script" uid="uid://y24asqitty57" path="res://UI/Components/QuickColorSelect.gd" id="15_crkl1"]
 [ext_resource type="Texture2D" uid="uid://ddxis8f7tvg66" path="res://Assets/Icons/selection_tool.png" id="16"]
 [ext_resource type="Texture2D" uid="uid://0qicbkag5jd3" path="res://Assets/Icons/circle_tool.png" id="19"]
 
@@ -33,7 +34,7 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[node name="Toolbar" type="ScrollContainer"]
+[node name="Toolbar" type="ScrollContainer" unique_id=1208007803]
 custom_minimum_size = Vector2(0, 40)
 anchors_preset = 10
 anchor_right = 1.0
@@ -42,22 +43,22 @@ theme = ExtResource("15")
 theme_override_styles/panel = SubResource("StyleBoxFlat_a5mfo")
 script = ExtResource("3")
 
-[node name="Console" type="HBoxContainer" parent="."]
+[node name="Console" type="HBoxContainer" parent="." unique_id=931352751]
 custom_minimum_size = Vector2(715, 40)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Left" type="HBoxContainer" parent="Console"]
+[node name="Left" type="HBoxContainer" parent="Console" unique_id=776928413]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 12
 
-[node name="VSeparator" type="VSeparator" parent="Console/Left"]
+[node name="VSeparator" type="VSeparator" parent="Console/Left" unique_id=775451218]
 layout_mode = 2
 theme_override_styles/separator = SubResource("2")
 
-[node name="NewFileButton" type="TextureButton" parent="Console/Left"]
+[node name="NewFileButton" type="TextureButton" parent="Console/Left" unique_id=1443080133]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -67,7 +68,7 @@ script = ExtResource("13")
 hover_tint = Color(0.662745, 0.945098, 0.87451, 1)
 pressed_tint = Color(0.572549, 1, 0.894118, 1)
 
-[node name="OpenFileButton" type="TextureButton" parent="Console/Left"]
+[node name="OpenFileButton" type="TextureButton" parent="Console/Left" unique_id=555809155]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -77,7 +78,7 @@ script = ExtResource("13")
 hover_tint = Color(0.662745, 0.945098, 0.87451, 1)
 pressed_tint = Color(0.572549, 1, 0.894118, 1)
 
-[node name="SaveFileButton" type="TextureButton" parent="Console/Left"]
+[node name="SaveFileButton" type="TextureButton" parent="Console/Left" unique_id=744134674]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -87,11 +88,11 @@ script = ExtResource("13")
 hover_tint = Color(0.662745, 0.945098, 0.87451, 1)
 pressed_tint = Color(0.572549, 1, 0.894118, 1)
 
-[node name="VSeparator2" type="VSeparator" parent="Console/Left"]
+[node name="VSeparator2" type="VSeparator" parent="Console/Left" unique_id=1425515612]
 layout_mode = 2
 theme_override_styles/separator = SubResource("3")
 
-[node name="UndoButton" type="TextureButton" parent="Console/Left"]
+[node name="UndoButton" type="TextureButton" parent="Console/Left" unique_id=1825535452]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -101,7 +102,7 @@ script = ExtResource("13")
 hover_tint = Color(0.662745, 0.945098, 0.87451, 1)
 pressed_tint = Color(0.572549, 1, 0.894118, 1)
 
-[node name="RedoButton" type="TextureButton" parent="Console/Left"]
+[node name="RedoButton" type="TextureButton" parent="Console/Left" unique_id=212772882]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -111,11 +112,11 @@ script = ExtResource("13")
 hover_tint = Color(0.662745, 0.945098, 0.87451, 1)
 pressed_tint = Color(0.572549, 1, 0.894118, 1)
 
-[node name="VSeparator3" type="VSeparator" parent="Console/Left"]
+[node name="VSeparator3" type="VSeparator" parent="Console/Left" unique_id=160938183]
 layout_mode = 2
 theme_override_styles/separator = SubResource("3")
 
-[node name="BrushToolButton" type="TextureButton" parent="Console/Left"]
+[node name="BrushToolButton" type="TextureButton" parent="Console/Left" unique_id=1317460985]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -127,7 +128,7 @@ script = ExtResource("13")
 hover_tint = Color(0.662745, 0.945098, 0.87451, 1)
 pressed_tint = Color(0.572549, 1, 0.894118, 1)
 
-[node name="RectangleToolButton" type="TextureButton" parent="Console/Left"]
+[node name="RectangleToolButton" type="TextureButton" parent="Console/Left" unique_id=380914363]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -139,7 +140,7 @@ script = ExtResource("13")
 hover_tint = Color(0.662745, 0.945098, 0.87451, 1)
 pressed_tint = Color(0.572549, 1, 0.894118, 1)
 
-[node name="CircleToolButton" type="TextureButton" parent="Console/Left"]
+[node name="CircleToolButton" type="TextureButton" parent="Console/Left" unique_id=1870597547]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -150,7 +151,7 @@ script = ExtResource("13")
 hover_tint = Color(0.662745, 0.945098, 0.87451, 1)
 pressed_tint = Color(0.572549, 1, 0.894118, 1)
 
-[node name="LineToolButton" type="TextureButton" parent="Console/Left"]
+[node name="LineToolButton" type="TextureButton" parent="Console/Left" unique_id=786861170]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -161,7 +162,7 @@ script = ExtResource("13")
 hover_tint = Color(0.662745, 0.945098, 0.87451, 1)
 pressed_tint = Color(0.572549, 1, 0.894118, 1)
 
-[node name="EraserToolButton" type="TextureButton" parent="Console/Left"]
+[node name="EraserToolButton" type="TextureButton" parent="Console/Left" unique_id=511546579]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -172,7 +173,7 @@ script = ExtResource("13")
 hover_tint = Color(0.662745, 0.945098, 0.87451, 1)
 pressed_tint = Color(0.572549, 1, 0.894118, 1)
 
-[node name="SelectionToolButton" type="TextureButton" parent="Console/Left"]
+[node name="SelectionToolButton" type="TextureButton" parent="Console/Left" unique_id=1640094416]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -183,29 +184,33 @@ script = ExtResource("13")
 hover_tint = Color(0.662745, 0.945098, 0.87451, 1)
 pressed_tint = Color(0.572549, 1, 0.894118, 1)
 
-[node name="VSeparator4" type="VSeparator" parent="Console/Left"]
+[node name="VSeparator4" type="VSeparator" parent="Console/Left" unique_id=314133963]
 layout_mode = 2
 theme_override_styles/separator = SubResource("3")
 
-[node name="ColorButton" type="Button" parent="Console/Left"]
+[node name="ColorButton" type="Button" parent="Console/Left" unique_id=482620716]
 custom_minimum_size = Vector2(60, 20)
 layout_mode = 2
 size_flags_vertical = 4
 tooltip_text = "TOOLBAR_TOOLTIP_BRUSH_COLOR"
-theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_styles/focus = SubResource("4")
-theme_override_styles/disabled = SubResource("4")
-theme_override_styles/hover = SubResource("4")
-theme_override_styles/pressed = SubResource("4")
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
 theme_override_styles/normal = SubResource("4")
+theme_override_styles/pressed = SubResource("4")
+theme_override_styles/hover = SubResource("4")
+theme_override_styles/disabled = SubResource("4")
+theme_override_styles/focus = SubResource("4")
 action_mode = 0
 text = "#ffffff"
 
-[node name="BrushSizeSlider" type="HSlider" parent="Console/Left"]
+[node name="QuickColorSelect" type="HBoxContainer" parent="Console/Left" unique_id=392123913]
+layout_mode = 2
+script = ExtResource("15_crkl1")
+
+[node name="BrushSizeSlider" type="HSlider" parent="Console/Left" unique_id=512276971]
 custom_minimum_size = Vector2(180, 20)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -215,16 +220,16 @@ min_value = 1.0
 max_value = 32.0
 value = 5.0
 
-[node name="BrushSizeLabel" type="Label" parent="Console/Left"]
+[node name="BrushSizeLabel" type="Label" parent="Console/Left" unique_id=476267220]
 layout_mode = 2
 text = "12"
 
-[node name="Right" type="HBoxContainer" parent="Console"]
+[node name="Right" type="HBoxContainer" parent="Console" unique_id=902993078]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 12
 alignment = 2
 
-[node name="KeepMe" type="Control" parent="Console/Right"]
+[node name="KeepMe" type="Control" parent="Console/Right" unique_id=1720060254]
 layout_mode = 2

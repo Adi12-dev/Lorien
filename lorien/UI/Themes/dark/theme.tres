@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=28 format=4 uid="uid://u5qnpgxqykiv"]
+[gd_resource type="Theme" format=4 uid="uid://u5qnpgxqykiv"]
 
 [ext_resource type="Texture2D" uid="uid://bp1yka17gbjtu" path="res://Assets/Icons/close.png" id="1_qgxa7"]
 [ext_resource type="StyleBox" uid="uid://kdduww61cjw" path="res://UI/Themes/dark/tab_inactive.tres" id="2_n6mkw"]
@@ -179,6 +179,15 @@ data = PackedByteArray("d09GMgABAAAAALU4ABEAAAABjRQAALTXAAEAAAAAAAAAAAAAAAAAAAAA
 font_name = "Open Sans SemiBold"
 style_name = "SemiBold"
 font_weight = 600
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
 cache/0/16/0/ascent = 18.0
 cache/0/16/0/descent = 5.0
 cache/0/16/0/underline_position = 1.60938
