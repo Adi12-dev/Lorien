@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://6dequl0xfsbm"]
+
+[ext_resource type="Script" uid="uid://dmrtv3ls6v5gr" path="res://CanvasImage/CanvasImage.gd" id="1_phf20"]
+
+[node name="CanvasImage" type="Node2D" unique_id=1388959630]
+script = ExtResource("1_phf20")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=340696340]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=606973019]

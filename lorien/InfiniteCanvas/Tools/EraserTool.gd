@@ -65,15 +65,16 @@ func _add_undoredo_action_for_erased_strokes() -> void:
 		project.undo_redo.create_action("Erase Stroke")
 		for stroke: BrushStroke in _removed_strokes:
 			_removed_strokes.erase(stroke)
-			project.undo_redo.add_do_method(Callable(_canvas, "_do_delete_stroke").bind(stroke))
-			project.undo_redo.add_undo_method(Callable(_canvas, "_undo_delete_stroke").bind(stroke))
+			project.undo_redo.add_do_method(Callable(_canvas, "_do_delete_item").bind(stroke))
+			project.undo_redo.add_undo_method(Callable(_canvas, "_undo_delete_item").bind(stroke))
 		project.undo_redo.commit_action()
 		project.dirty = true
 
 # ------------------------------------------------------------------------------------------------
 func _update_bounding_boxes() -> void:
 	var strokes := _canvas.get_all_strokes()
-	_bounding_box_cache = Utils.calculte_bounding_boxes(strokes, BOUNDING_BOX_MARGIN)
+	var images := _canvas.get_all_images()
+	_bounding_box_cache = Utils.calculte_bounding_boxes(strokes, images, BOUNDING_BOX_MARGIN)
 	#$"../Viewport/DebugDraw".set_bounding_boxes(_bounding_box_cache.values())
 
 # ------------------------------------------------------------------------------------------------

@@ -3,6 +3,7 @@ class_name InfiniteCanvas
 
 # -------------------------------------------------------------------------------------------------
 const BRUSH_STROKE = preload("res://BrushStroke/BrushStroke.tscn")
+const CANVAS_IMAGE = preload("res://CanvasImage/CanvasImage.tscn")
 const PLAYER = preload("res://Misc/Player/Player.tscn")
 
 # -------------------------------------------------------------------------------------------------
@@ -14,6 +15,7 @@ const PLAYER = preload("res://Misc/Player/Player.tscn")
 @onready var _selection_tool: SelectionTool = $SelectionTool
 @onready var _active_tool: CanvasTool = _brush_tool
 @onready var _active_tool_type: int = Types.Tool.BRUSH
+@onready var _images_parent: Node2D = $SubViewport/Images
 @onready var _strokes_parent: Node2D = $SubViewport/Strokes
 @onready var _camera: Camera2D = $SubViewport/Camera2D
 @onready var _viewport: SubViewport = $SubViewport
@@ -91,11 +93,11 @@ func _process_event(event: InputEvent) -> void:
 
 	if event.is_action("deselect_all_strokes"):
 		if _active_tool == _selection_tool:
-			_selection_tool.deselect_all_strokes()
+			_selection_tool.deselect_all_items()
 
-	if event.is_action("delete_selected_strokes"):
+	if event.is_action("delete_selected_items"):
 		if _active_tool == _selection_tool:
-			_delete_selected_strokes()
+			_delete_selected_items()
 	
 	if !get_tree().root.get_viewport().is_input_handled():
 		_camera.tool_event(event)
@@ -181,8 +183,16 @@ func get_strokes_in_camera_frustrum() -> Array:
 	return get_tree().get_nodes_in_group(BrushStroke.GROUP_ONSCREEN)
 
 # -------------------------------------------------------------------------------------------------
+func get_images_in_camera_frustrum() -> Array:
+	return get_tree().get_nodes_in_group(CanvasImage.GROUP_ONSCREEN)
+
+# -------------------------------------------------------------------------------------------------
 func get_all_strokes() -> Array[BrushStroke]:
 	return _current_project.strokes
+
+# -------------------------------------------------------------------------------------------------
+func get_all_images() -> Array[CanvasImage]:
+	return _current_project.images
 
 # -------------------------------------------------------------------------------------------------
 func enable() -> void:
@@ -202,6 +212,16 @@ func disable() -> void:
 # -------------------------------------------------------------------------------------------------
 func take_screenshot() -> Image:
 	return _viewport.get_texture().get_data()
+
+# -------------------------------------------------------------------------------------------------
+func add_image(img: Image) -> void:
+	if _current_project != null:
+		var canvas_image: CanvasImage = CANVAS_IMAGE.instantiate()
+		canvas_image.load_from_image(img)
+		canvas_image.position = _camera.get_screen_center_position()
+		_images_parent.add_child(canvas_image)
+		_current_project.images.append(canvas_image)
+		info.image_count += 1
 
 # -------------------------------------------------------------------------------------------------
 func add_stroke(stroke: BrushStroke) -> void:
@@ -299,6 +319,10 @@ func use_project(project: Project) -> void:
 	info.point_count = 0
 	info.stroke_count = 0
 	
+	for img in _images_parent.get_children():
+		_images_parent.remove_child(img)
+	info.image_count = 0
+	
 	# Apply metdadata
 	ProjectMetadata.apply_from_dict(project.meta_data, self)
 	_active_tool.get_cursor()._on_zoom_changed(_camera.zoom.x)
@@ -309,6 +333,10 @@ func use_project(project: Project) -> void:
 		_strokes_parent.add_child(stroke)
 		info.stroke_count += 1
 		info.point_count += stroke.points.size()
+	
+	for img in _current_project.images:
+		_images_parent.add_child(img)
+		info.image_count += 1
 	
 	_grid.queue_redraw()
 	
@@ -360,31 +388,42 @@ func _on_camera_moved(pos: Vector2) -> void:
 	_current_project.dirty = true
 
 # -------------------------------------------------------------------------------------------------
-func _delete_selected_strokes() -> void:
-	var strokes := _selection_tool.get_selected_strokes()
-	if !strokes.is_empty():
+func _delete_selected_items() -> void:
+	var items := _selection_tool.get_selected_items()
+	if !items.is_empty():
 		_current_project.undo_redo.create_action("Delete Selection")
-		for stroke: BrushStroke in strokes:
-			_current_project.undo_redo.add_do_method(_do_delete_stroke.bind(stroke))
-			_current_project.undo_redo.add_undo_reference(stroke)
-			_current_project.undo_redo.add_undo_method(_undo_delete_stroke.bind(stroke))
-		_selection_tool.deselect_all_strokes()
+		for item: Node in items:
+			_current_project.undo_redo.add_do_method(_do_delete_item.bind(item))
+			_current_project.undo_redo.add_undo_reference(item)
+			_current_project.undo_redo.add_undo_method(_undo_delete_item.bind(item))
+		_selection_tool.deselect_all_items()
 		_current_project.undo_redo.commit_action()
 		_current_project.dirty = true
 
 # -------------------------------------------------------------------------------------------------
-func _do_delete_stroke(stroke: BrushStroke) -> void:
-	var index := _current_project.strokes.find(stroke)
-	_current_project.strokes.remove_at(index)
-	_strokes_parent.remove_child(stroke)
-	info.point_count -= stroke.points.size()
-	info.stroke_count -= 1
+func _do_delete_item(item: Node) -> void:
+	if item is BrushStroke:
+		var index := _current_project.strokes.find(item)
+		_current_project.strokes.remove_at(index)
+		_strokes_parent.remove_child(item)
+		info.point_count -= item.points.size()
+		info.stroke_count -= 1
+	elif item is CanvasImage:
+		var index := _current_project.images.find(item)
+		_current_project.images.remove_at(index)
+		_images_parent.remove_child(item)
+		info.image_count -= 1
 
 # FIXME: this adds strokes at the back and does not preserve stroke order; not sure how to do that except saving before
 # and after versions of the stroke arrays which is a nogo.
 # -------------------------------------------------------------------------------------------------
-func _undo_delete_stroke(stroke: BrushStroke) -> void:
-	_current_project.strokes.append(stroke)
-	_strokes_parent.add_child(stroke)
-	info.point_count += stroke.points.size()
-	info.stroke_count += 1
+func _undo_delete_item(item: Node) -> void:
+	if item is BrushStroke:
+		_current_project.strokes.append(item)
+		_strokes_parent.add_child(item)
+		info.point_count += item.points.size()
+		info.stroke_count += 1
+	elif item is CanvasImage:
+		_current_project.images.append(item)
+		_images_parent.add_child(item)
+		info.image_count += 1
