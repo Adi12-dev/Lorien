@@ -4,7 +4,6 @@ class_name Statusbar
 # -------------------------------------------------------------------------------------------------
 @onready var _strokes_label: Label = $MarginContainer/HBoxContainer/Right/StrokesLabel
 @onready var _points_label: Label = $MarginContainer/HBoxContainer/Right/PointsLabel
-@onready var _images_label: Label = $MarginContainer/HBoxContainer/Right/ImagesLabel
 @onready var _pressure_label: Label = $MarginContainer/HBoxContainer/Left/PressureLabel
 @onready var _position_label: Label = $MarginContainer/HBoxContainer/Left/PositionLabel
 @onready var _zoom_label: Label = $MarginContainer/HBoxContainer/Left/ZoomLabel
@@ -16,7 +15,6 @@ var _str_pressure: String
 var _str_fps: String
 var _str_stroke_count: String
 var _str_point_count: String
-var _str_image_count: String
 
 # -------------------------------------------------------------------------------------------------
 func _ready() -> void:
@@ -31,7 +29,6 @@ func _apply_language() -> void:
 	_str_fps = tr("STATUSBAR_FPS")
 	_str_stroke_count = tr("STATUSBAR_STROKES")
 	_str_point_count = tr("STATUSBAR_POINTS")
-	_str_image_count = tr("STATUSBAR_IMAGES")
 
 # -------------------------------------------------------------------------------------------------
 func set_camera_position(pos: Vector2) -> void:
@@ -59,7 +56,3 @@ func set_stroke_count(brush_stroke_count: int) -> void:
 # -------------------------------------------------------------------------------------------------
 func set_point_count(point_count: int) -> void:
 	_points_label.text = "%s: %d" % [_str_point_count, point_count]
-
-# -------------------------------------------------------------------------------------------------
-func set_image_count(image_count: int) -> void:
-	_images_label.text = "%s: %d" % [_str_image_count, image_count]

@@ -6,14 +6,12 @@ class_name Serializer
 
 # -------------------------------------------------------------------------------------------------
 const BRUSH_STROKE = preload("res://BrushStroke/BrushStroke.tscn")
-const CANVAS_IMAGE = preload("res://CanvasImage/CanvasImage.tscn")
 const COMPRESSION_METHOD = FileAccess.COMPRESSION_DEFLATE
 const POINT_ELEM_SIZE := 3
 
 const VERSION_NUMBER := 1
 const TYPE_BRUSH_STROKE := 0
 const TYPE_ERASER_STROKE_DEPRECATED := 1 # Deprecated since v0; will be ignored when read; structually the same as normal brush stroke
-const TYPE_IMAGE := 2
 
 # -------------------------------------------------------------------------------------------------
 static func save_project(project: Project) -> void:
@@ -28,27 +26,6 @@ static func save_project(project: Project) -> void:
 	# Meta data
 	file.store_32(VERSION_NUMBER)
 	file.store_pascal_string(_dict_to_metadata_str(project.meta_data))
-	
-	# Image data
-	for img: CanvasImage in project.images:
-		# Type
-		file.store_8(TYPE_IMAGE)
-		
-		# Position
-		file.store_float(img.position.x)
-		file.store_float(img.position.y)
-		
-		# Dimensions
-		file.store_float(img.scale.x)
-		file.store_float(img.scale.y)
-		
-		file.store_64(img.width)
-		file.store_64(img.height)
-		
-		# Image
-		var buff := img.get_buffer()
-		file.store_64(buff.size())
-		file.store_buffer(buff)
 	
 	# Stroke data
 	for stroke: BrushStroke in project.strokes:
@@ -92,7 +69,6 @@ static func load_project(project: Project) -> void:
 	
 	# Clear potential previous data
 	project.strokes.clear()
-	project.images.clear()
 	project.meta_data.clear()
 	
 	# Meta data
@@ -104,31 +80,8 @@ static func load_project(project: Project) -> void:
 	while true:
 		# Type
 		var type := file.get_8()
+		
 		match type:
-			TYPE_IMAGE:
-				var img: CanvasImage = CANVAS_IMAGE.instantiate()
-				
-				# Position
-				var x := file.get_float()
-				var y := file.get_float()
-				img.position = Vector2(x, y)
-				
-				# Dimensions
-				var sx := file.get_float()
-				var sy := file.get_float()
-				img.scale = Vector2(sx, sy)
-				
-				var _w := file.get_64()
-				var _h := file.get_64()
-				
-				# Image
-				var buff_size := file.get_64()
-				var buff := file.get_buffer(buff_size)
-				img.load_from_buffer(buff)
-				
-				project.images.append(img)
-				
-				
 			TYPE_BRUSH_STROKE, TYPE_ERASER_STROKE_DEPRECATED:
 				var brush_stroke: BrushStroke = BRUSH_STROKE.instantiate()
 				

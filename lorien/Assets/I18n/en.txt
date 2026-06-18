@@ -31,7 +31,6 @@ TOOLBAR_TOOLTIP_BRUSH_TOOL      Brush Tool
 TOOLBAR_TOOLTIP_RECTANGLE_TOOL  Rectangle Tool
 TOOLBAR_TOOLTIP_CIRCLE_TOOL     Circle Tool
 TOOLBAR_TOOLTIP_LINE_TOOL       Line Tool
-TOOLBAR_TOOLTIP_ADD_IMAGE       Add Image
 TOOLBAR_TOOLTIP_ERASER_TOOL     Eraser
 TOOLBAR_TOOLTIP_SELECT_TOOL     Selection Tool
 TOOLBAR_TOOLTIP_BRUSH_COLOR     Brush Color
@@ -57,7 +56,6 @@ STATUSBAR_PRESSURE              Pressure
 STATUSBAR_FPS                   FPS
 STATUSBAR_STROKES               Strokes
 STATUSBAR_POINTS                Points
-STATUSBAR_IMAGES                Images
 
 # -----------------------------------------------------------------------------
 # Settings strings

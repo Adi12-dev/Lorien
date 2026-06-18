@@ -17,7 +17,6 @@ var loaded := false
 var filepath: String
 var meta_data: Dictionary
 var strokes: Array[BrushStroke]
-var images: Array[CanvasImage]
 
 # -------------------------------------------------------------------------------------------------
 func _init() -> void:
@@ -35,7 +34,6 @@ func clear() -> void:
 	undo_redo = null
 	meta_data.clear()
 	strokes.clear()
-	images.clear()
 
 # -------------------------------------------------------------------------------------------------
 func add_stroke(stroke: BrushStroke) -> void:

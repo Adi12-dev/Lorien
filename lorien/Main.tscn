@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://2uaupgd20h03"]
+[gd_scene load_steps=16 format=3 uid="uid://2uaupgd20h03"]
 
-[ext_resource type="Script" uid="uid://bnmedk6cpopkq" path="res://Main.gd" id="1"]
+[ext_resource type="Script" path="res://Main.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://c4u5gk5n2aiom" path="res://InfiniteCanvas/InfiniteCanvas.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://bwer12t6vfkg1" path="res://UI/Statusbar.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://e4oiel4oqq0b" path="res://UI/Menubar.tscn" id="4"]
@@ -26,7 +26,7 @@ expand_margin_top = 6.0
 expand_margin_right = 6.0
 expand_margin_bottom = 6.0
 
-[node name="Main" type="Control" unique_id=1037413973]
+[node name="Main" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,28 +37,28 @@ mouse_filter = 2
 theme = ExtResource("8")
 script = ExtResource("1")
 
-[node name="InfiniteCanvas" parent="." unique_id=1873205855 instance=ExtResource("2")]
+[node name="InfiniteCanvas" parent="." instance=ExtResource("2")]
 layout_mode = 1
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 
-[node name="Topbar" type="VBoxContainer" parent="." unique_id=1483657173]
+[node name="Topbar" type="VBoxContainer" parent="."]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 0.0759259
 offset_bottom = -3.99998
 theme_override_constants/separation = 0
 
-[node name="Menubar" parent="Topbar" unique_id=272644867 instance=ExtResource("4")]
+[node name="Menubar" parent="Topbar" instance=ExtResource("4")]
 layout_mode = 2
 _main_menu_path = NodePath("../../MainMenu")
 
-[node name="Toolbar" parent="Topbar" unique_id=520332475 instance=ExtResource("6")]
+[node name="Toolbar" parent="Topbar" instance=ExtResource("6")]
 layout_mode = 2
 file_dialog_path = NodePath("../../FileDialog")
 
-[node name="Statusbar" parent="." unique_id=202290352 instance=ExtResource("3")]
+[node name="Statusbar" parent="." instance=ExtResource("3")]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -68,7 +68,7 @@ grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(1, 1.00112)
 
-[node name="BrushColorPicker" parent="." unique_id=2124589917 instance=ExtResource("13")]
+[node name="BrushColorPicker" parent="." instance=ExtResource("13")]
 visible = false
 layout_mode = 0
 offset_left = 386.102
@@ -80,11 +80,11 @@ edit_palette_dialog = NodePath("../EditPaletteWindow/EditPaletteDialog")
 delete_palette_dialog = NodePath("../DeletePaletteWindow/DeletePaletteDialog")
 toolbar_path = NodePath("../Topbar/Toolbar")
 
-[node name="BackgroundColorPickerPopup" type="Popup" parent="." unique_id=1419906638]
+[node name="BackgroundColorPickerPopup" type="Popup" parent="."]
 size = Vector2i(399, 525)
 theme = ExtResource("8")
 
-[node name="PanelContainer" type="PanelContainer" parent="BackgroundColorPickerPopup" unique_id=1868211623]
+[node name="PanelContainer" type="PanelContainer" parent="BackgroundColorPickerPopup"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -96,18 +96,18 @@ offset_right = 154.5
 offset_bottom = 202.0
 theme_override_styles/panel = SubResource("1")
 
-[node name="ColorPicker" type="ColorPicker" parent="BackgroundColorPickerPopup/PanelContainer" unique_id=132540078]
+[node name="ColorPicker" type="ColorPicker" parent="BackgroundColorPickerPopup/PanelContainer"]
 layout_mode = 2
 edit_alpha = false
 presets_visible = false
 
-[node name="MainMenu" parent="." unique_id=1165652819 instance=ExtResource("5")]
+[node name="MainMenu" parent="." instance=ExtResource("5")]
 visible = false
 unfocusable = false
 submenu_popup_delay = 0.1
 file_dialog_path = NodePath("../FileDialog")
 
-[node name="NewPaletteWindow" type="Window" parent="." unique_id=229746232]
+[node name="NewPaletteWindow" type="Window" parent="."]
 auto_translate_mode = 1
 title = "NEW_PALETTE_DIALOG_CREATE_TITLE"
 initial_position = 2
@@ -116,9 +116,9 @@ visible = false
 exclusive = true
 unresizable = true
 
-[node name="NewPaletteDialog" parent="NewPaletteWindow" unique_id=1402562512 instance=ExtResource("12")]
+[node name="NewPaletteDialog" parent="NewPaletteWindow" instance=ExtResource("12")]
 
-[node name="DeletePaletteWindow" type="Window" parent="." unique_id=424229099]
+[node name="DeletePaletteWindow" type="Window" parent="."]
 title = "DELETE_PALETTE_DIALOG_TITLE"
 initial_position = 2
 size = Vector2i(420, 100)
@@ -126,9 +126,9 @@ visible = false
 exclusive = true
 unresizable = true
 
-[node name="DeletePaletteDialog" parent="DeletePaletteWindow" unique_id=94437964 instance=ExtResource("15")]
+[node name="DeletePaletteDialog" parent="DeletePaletteWindow" instance=ExtResource("15")]
 
-[node name="EditPaletteWindow" type="Window" parent="." unique_id=1555190687]
+[node name="EditPaletteWindow" type="Window" parent="."]
 auto_translate_mode = 1
 title = "EDIT_PALETTE_DIALOG_TITLE"
 initial_position = 2
@@ -136,9 +136,9 @@ size = Vector2i(495, 495)
 visible = false
 exclusive = true
 
-[node name="EditPaletteDialog" parent="EditPaletteWindow" unique_id=399515170 instance=ExtResource("14")]
+[node name="EditPaletteDialog" parent="EditPaletteWindow" instance=ExtResource("14")]
 
-[node name="AboutWindow" type="Window" parent="." unique_id=1797209928]
+[node name="AboutWindow" type="Window" parent="."]
 title = "ABOUT_DIALOG_TITLE"
 initial_position = 2
 size = Vector2i(420, 210)
@@ -146,7 +146,7 @@ visible = false
 exclusive = true
 unresizable = true
 
-[node name="AboutDialog" parent="AboutWindow" unique_id=1227986937 instance=ExtResource("9")]
+[node name="AboutDialog" parent="AboutWindow" instance=ExtResource("9")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -156,7 +156,7 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="SettingsWindow" type="Window" parent="." unique_id=177109821]
+[node name="SettingsWindow" type="Window" parent="."]
 auto_translate_mode = 1
 title = "SETTINGS_TITLE"
 initial_position = 2
@@ -164,9 +164,9 @@ size = Vector2i(512, 450)
 visible = false
 exclusive = true
 
-[node name="SettingsDialog" parent="SettingsWindow" unique_id=588416714 instance=ExtResource("10")]
+[node name="SettingsDialog" parent="SettingsWindow" instance=ExtResource("10")]
 
-[node name="UnsavedChangesWindow" type="Window" parent="." unique_id=1906912456]
+[node name="UnsavedChangesWindow" type="Window" parent="."]
 auto_translate_mode = 1
 title = "UNSAVED_CHANGES_DIALOG_TITLE"
 initial_position = 2
@@ -175,16 +175,17 @@ visible = false
 exclusive = true
 unresizable = true
 
-[node name="UnsavedChangesDialog" parent="UnsavedChangesWindow" unique_id=619572017 instance=ExtResource("7")]
+[node name="UnsavedChangesDialog" parent="UnsavedChangesWindow" instance=ExtResource("7")]
 
-[node name="FileDialog" type="FileDialog" parent="." unique_id=1848018475]
-oversampling_override = 1.0
+[node name="FileDialog" type="FileDialog" parent="."]
 initial_position = 2
+size = Vector2i(625, 175)
 theme = ExtResource("8")
 access = 2
 filters = PackedStringArray("*.lorien")
+use_native_dialog = true
 
-[node name="ExportDialog" type="FileDialog" parent="." unique_id=1807176112]
+[node name="ExportDialog" type="FileDialog" parent="."]
 initial_position = 2
 size = Vector2i(625, 175)
 theme = ExtResource("8")
