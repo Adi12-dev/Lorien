@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://bc8c1qy2xs4kn" path="res://UI/Components/FlatTextureButton.gd" id="13"]
 [ext_resource type="Texture2D" uid="uid://8lcoo7iuqdju" path="res://Assets/Icons/add_image.png" id="13_crkl1"]
 [ext_resource type="Theme" uid="uid://u5qnpgxqykiv" path="res://UI/Themes/dark/theme.tres" id="15"]
+[ext_resource type="Script" uid="uid://y24asqitty57" path="res://UI/Components/QuickColorSelect.gd" id="15_crkl1"]
 [ext_resource type="Texture2D" uid="uid://ddxis8f7tvg66" path="res://Assets/Icons/selection_tool.png" id="16"]
 [ext_resource type="Texture2D" uid="uid://0qicbkag5jd3" path="res://Assets/Icons/circle_tool.png" id="19"]
 
@@ -217,7 +218,11 @@ theme_override_styles/focus = SubResource("4")
 action_mode = 0
 text = "#ffffff"
 
-[node name="BrushSizeSlider" type="HSlider" parent="Console/Left" unique_id=287389252]
+[node name="QuickColorSelect" type="HBoxContainer" parent="Console/Left" unique_id=392123913]
+layout_mode = 2
+script = ExtResource("15_crkl1")
+
+[node name="BrushSizeSlider" type="HSlider" parent="Console/Left" unique_id=512276971]
 custom_minimum_size = Vector2(180, 20)
 layout_mode = 2
 size_flags_horizontal = 4

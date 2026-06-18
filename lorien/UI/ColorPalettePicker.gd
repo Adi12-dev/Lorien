@@ -6,6 +6,7 @@ const PALETTE_BUTTON = preload("res://UI/Components/PaletteButton.tscn")
 
 # -------------------------------------------------------------------------------------------------
 signal color_changed(color: Color)
+signal color_index_changed(index: int)
 signal closed
 
 # -------------------------------------------------------------------------------------------------
@@ -22,8 +23,11 @@ signal closed
 @onready var _duplicate_button: TextureButton = $MarginContainer/VBoxContainer/Buttons/DuplicatePaletteButton
 @onready var _delete_button: TextureButton = $MarginContainer/VBoxContainer/Buttons/DeletePaletteButton
 
+@onready var _quick_color_select : QuickColorSelect = get_node("/root/Main/Topbar/Toolbar/Console/Left/QuickColorSelect")
+
 var _active_palette_button: PaletteButton
 var _active_color_index := -1
+var _active_palette : Palette
 
 # -------------------------------------------------------------------------------------------------
 func _ready() -> void:
@@ -34,6 +38,10 @@ func _ready() -> void:
 	_edit_button.pressed.connect(_on_EditColorButton_pressed)
 	_duplicate_button.pressed.connect(_on_DuplicatePaletteButton_pressed)
 	_delete_button.pressed.connect(_on_DeletePaletteButton_pressed)
+	
+	_quick_color_select.color_index_changed.connect(_activate_palette_button_at_index)
+	
+	
 	
 # -------------------------------------------------------------------------------------------------
 func _input(event: InputEvent) -> void:
@@ -69,9 +77,9 @@ func update_palettes(color_index: int = 0) -> void:
 		_palette_selection_button.add_item(palette.name)
 	
 	# Load the active palette
-	var active_palette := PaletteManager.get_active_palette()
+	_active_palette = PaletteManager.get_active_palette()
 	_palette_selection_button.selected = PaletteManager.get_active_palette_index()
-	_create_buttons(active_palette)
+	_create_buttons(_active_palette)
 	_activate_palette_button(_color_grid.get_child(color_index), color_index)
 
 # -------------------------------------------------------------------------------------------------
@@ -110,9 +118,15 @@ func _activate_palette_button(button: PaletteButton, color_index: int) -> void:
 	_active_palette_button.selected = true
 
 # -------------------------------------------------------------------------------------------------
+func _activate_palette_button_at_index(index: int) -> void:
+	var button : PaletteButton = _color_grid.get_child(index)
+	_activate_palette_button(button, index)
+
+# -------------------------------------------------------------------------------------------------
 func _on_platte_button_pressed(button: PaletteButton, index: int) -> void:
 	_activate_palette_button(button, index)
 	color_changed.emit(button.color)
+	color_index_changed.emit(index)
 
 # -------------------------------------------------------------------------------------------------
 func _on_PaletteSelectionButton_item_selected(index: int) -> void:
@@ -123,6 +137,8 @@ func _on_PaletteSelectionButton_item_selected(index: int) -> void:
 	_create_buttons(palette)
 	_activate_palette_button(_color_grid.get_child(0), 0)
 	_adjust_position()
+	_quick_color_select.update_palettes(0)
+	color_changed.emit(_color_grid.get_child(0).color)
 
 # -------------------------------------------------------------------------------------------------
 func _on_AddPaletteButton_pressed() -> void:
