@@ -590,7 +590,7 @@ func _update_brush_color() -> void:
 # --------------------------------------------------------------------------------------------------
 func _on_EditPaletteDialog_palette_changed() -> void:
 	_update_brush_color()
-
+	
 
 # --------------------------------------------------------------------------------------------------
 func _on_DeletePaletteDialog_palette_deleted() -> void:

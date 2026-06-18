@@ -139,7 +139,7 @@ func _on_PaletteSelectionButton_item_selected(index: int) -> void:
 	_adjust_position()
 	_quick_color_select.update_palettes(0)
 	color_changed.emit(_color_grid.get_child(0).color)
-
+	
 # -------------------------------------------------------------------------------------------------
 func _on_AddPaletteButton_pressed() -> void:
 	var dialog: NewPaletteDialog = get_node(add_new_palette_dialog_path)
