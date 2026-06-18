@@ -3,6 +3,7 @@ class_name Toolbar
 
 signal new_project
 signal open_project(filepath: String)
+signal open_image(filepath: String)
 signal save_project
 signal clear_canvas
 signal undo_action
@@ -31,8 +32,11 @@ const BUTTON_NORMAL_COLOR = Color.WHITE
 @onready var _tool_btn_rectangle: FlatTextureButton = $Console/Left/RectangleToolButton
 @onready var _tool_btn_circle: FlatTextureButton = $Console/Left/CircleToolButton
 @onready var _tool_btn_line: FlatTextureButton = $Console/Left/LineToolButton
+@onready var _add_image_btn: FlatTextureButton = $Console/Left/AddImageButton
 @onready var _tool_btn_eraser: FlatTextureButton = $Console/Left/EraserToolButton
 @onready var _tool_btn_selection: FlatTextureButton = $Console/Left/SelectionToolButton
+
+@onready var file_dialog: FileDialog = get_node(file_dialog_path)
 
 var _last_active_tool_button: FlatTextureButton
 var _current_tool : Types.Tool = Types.Tool.BRUSH
@@ -63,6 +67,7 @@ func _ready() -> void:
 	_tool_btn_rectangle.pressed.connect(_on_rectangle_tool_pressed)
 	_tool_btn_circle.pressed.connect(_on_circle_tool_pressed)
 	_tool_btn_line.pressed.connect(_on_line_tool_pressed)
+	_add_image_btn.pressed.connect(_on_add_image_pressed)
 	_tool_btn_eraser.pressed.connect(_on_eraser_tool_pressed)
 	_tool_btn_selection.pressed.connect(_on_select_tool_pressed)
 	
@@ -120,23 +125,23 @@ func _on_keybinding_changed(action: KeybindingsManager.Action) -> void:
 		"shortcut_select_tool": _tool_btn_selection.tooltip_text = fmt % [tr("TOOLBAR_TOOLTIP_SELECT_TOOL"), label]
 
 # -------------------------------------------------------------------------------------------------
+func _prepare_file_dialog() -> void:
+	for conn: Dictionary in file_dialog.file_selected.get_connections():
+		file_dialog.file_selected.disconnect(conn["callable"])
+	for conn: Dictionary in file_dialog.dir_selected.get_connections():
+		file_dialog.dir_selected.disconnect(conn["callable"])
+
+# -------------------------------------------------------------------------------------------------
 func _on_open_project_pressed() -> void:
-	var file_dialog: FileDialog = get_node(file_dialog_path)
+	_prepare_file_dialog()
 	file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
+	file_dialog.filters = PackedStringArray(["*.lorien"])
 	file_dialog.file_selected.connect(_on_project_selected_to_open)
-	file_dialog.close_requested.connect(_on_file_dialog_closed)
-	file_dialog.invalidate()
 	file_dialog.popup_centered()
 
 # -------------------------------------------------------------------------------------------------
 func _on_project_selected_to_open(filepath: String) -> void:
 	open_project.emit(filepath)
-
-# -------------------------------------------------------------------------------------------------
-func _on_file_dialog_closed() -> void:
-	var file_dialog: FileDialog = get_node(file_dialog_path)
-	Utils.remove_signal_connections(file_dialog, "file_selected")
-	Utils.remove_signal_connections(file_dialog, "close_requested")
 
 # -------------------------------------------------------------------------------------------------
 func _on_brush_size_changed(value: float) -> void:
@@ -167,6 +172,18 @@ func _on_line_tool_pressed() -> void:
 	_change_active_tool_button(_tool_btn_line)
 	_current_tool = Types.Tool.LINE
 	tool_changed.emit(Types.Tool.LINE)
+
+# -------------------------------------------------------------------------------------------------
+func _on_add_image_pressed() -> void:
+	_prepare_file_dialog()
+	file_dialog.file_mode = FileDialog.FILE_MODE_OPEN_FILE
+	file_dialog.filters = PackedStringArray(["*.png, *.jpg, *.jpeg, *.svg ; All Supported Images"])
+	file_dialog.file_selected.connect(_on_img_selected_to_open)
+	file_dialog.popup_centered()
+
+# -------------------------------------------------------------------------------------------------
+func _on_img_selected_to_open(filepath: String) -> void:
+	open_image.emit(filepath)
 
 # -------------------------------------------------------------------------------------------------
 func _on_eraser_tool_pressed() -> void:

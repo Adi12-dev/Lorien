@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bwer12t6vfkg1"]
+[gd_scene format=3 uid="uid://bwer12t6vfkg1"]
 
 [ext_resource type="Theme" uid="uid://u5qnpgxqykiv" path="res://UI/Themes/dark/theme.tres" id="1"]
-[ext_resource type="Script" path="res://UI/Statusbar.gd" id="2"]
+[ext_resource type="Script" uid="uid://bjsactn7x04oi" path="res://UI/Statusbar.gd" id="2"]
 
-[node name="Statusbar" type="Panel"]
+[node name="Statusbar" type="Panel" unique_id=366285978]
 custom_minimum_size = Vector2(0, 24)
 anchors_preset = 10
 anchor_right = 1.0
@@ -11,65 +11,73 @@ offset_bottom = 24.0
 theme = ExtResource("1")
 script = ExtResource("2")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=914765828]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_right = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1585163535]
 layout_mode = 2
 
-[node name="Left" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
+[node name="Left" type="HBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=233366581]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="PositionLabel" type="Label" parent="MarginContainer/HBoxContainer/Left"]
+[node name="PositionLabel" type="Label" parent="MarginContainer/HBoxContainer/Left" unique_id=494512320]
 layout_mode = 2
 text = "Position: -"
 
-[node name="Sep" type="Label" parent="MarginContainer/HBoxContainer/Left"]
+[node name="Sep" type="Label" parent="MarginContainer/HBoxContainer/Left" unique_id=663679113]
 layout_mode = 2
 text = "|"
 
-[node name="ZoomLabel" type="Label" parent="MarginContainer/HBoxContainer/Left"]
+[node name="ZoomLabel" type="Label" parent="MarginContainer/HBoxContainer/Left" unique_id=171622077]
 layout_mode = 2
 text = "Zoom: -"
 
-[node name="Sep2" type="Label" parent="MarginContainer/HBoxContainer/Left"]
+[node name="Sep2" type="Label" parent="MarginContainer/HBoxContainer/Left" unique_id=91159673]
 layout_mode = 2
 text = "|"
 
-[node name="PressureLabel" type="Label" parent="MarginContainer/HBoxContainer/Left"]
+[node name="PressureLabel" type="Label" parent="MarginContainer/HBoxContainer/Left" unique_id=1488402934]
 layout_mode = 2
 text = "Pressure: -"
 
-[node name="Sep3" type="Label" parent="MarginContainer/HBoxContainer/Left"]
+[node name="Sep3" type="Label" parent="MarginContainer/HBoxContainer/Left" unique_id=2411475]
 layout_mode = 2
 text = "|"
 
-[node name="FpsLabel" type="Label" parent="MarginContainer/HBoxContainer/Left"]
+[node name="FpsLabel" type="Label" parent="MarginContainer/HBoxContainer/Left" unique_id=998710833]
 layout_mode = 2
 text = "FPS: -"
 
-[node name="Right" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
+[node name="Right" type="HBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=74572160]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 alignment = 2
 
-[node name="StrokesLabel" type="Label" parent="MarginContainer/HBoxContainer/Right"]
+[node name="StrokesLabel" type="Label" parent="MarginContainer/HBoxContainer/Right" unique_id=304198262]
 layout_mode = 2
 text = "Strokes: 0"
 
-[node name="Sep" type="Label" parent="MarginContainer/HBoxContainer/Right"]
+[node name="Sep" type="Label" parent="MarginContainer/HBoxContainer/Right" unique_id=1622821171]
 layout_mode = 2
 text = "|"
 
-[node name="PointsLabel" type="Label" parent="MarginContainer/HBoxContainer/Right"]
+[node name="PointsLabel" type="Label" parent="MarginContainer/HBoxContainer/Right" unique_id=1199610313]
 layout_mode = 2
 text = "Points: 0"
+
+[node name="Sep2" type="Label" parent="MarginContainer/HBoxContainer/Right" unique_id=140345135]
+layout_mode = 2
+text = "|"
+
+[node name="ImagesLabel" type="Label" parent="MarginContainer/HBoxContainer/Right" unique_id=66091093]
+layout_mode = 2
+text = "Images: 0"

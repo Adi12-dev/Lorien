@@ -68,6 +68,7 @@ func _ready() -> void:
 	_toolbar.redo_action.connect(_on_redo_action)
 	_toolbar.clear_canvas.connect(_on_clear_canvas)
 	_toolbar.open_project.connect(_on_open_project)
+	_toolbar.open_image.connect(_on_open_image)
 	_toolbar.toggle_brush_color_picker.connect(_on_toggle_brush_color_picker)
 	_toolbar.new_project.connect(_on_create_new_project)
 	_toolbar.save_project.connect(_on_save_project)
@@ -149,6 +150,7 @@ func _process(delta: float) -> void:
 	# Upate statusbar
 	_statusbar.set_stroke_count(_canvas.info.stroke_count)
 	_statusbar.set_point_count(_canvas.info.point_count)
+	_statusbar.set_image_count(_canvas.info.image_count)
 	_statusbar.set_pressure(_canvas.info.current_pressure)
 	_statusbar.set_camera_position(_canvas.get_camera_offset())
 	_statusbar.set_camera_zoom(_canvas.get_camera_zoom())
@@ -431,6 +433,8 @@ func _on_save_project() -> void:
 	if active_project.filepath.is_empty():
 		_canvas.disable()
 		_file_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE
+		_file_dialog.filters = PackedStringArray(["*.lorien"])
+		_file_dialog.current_file = ""
 		_file_dialog.invalidate()
 		_file_dialog.file_selected.connect(_on_file_selected_to_save_project)
 		_file_dialog.close_requested.connect(_on_file_dialog_closed)
@@ -444,8 +448,8 @@ func _on_file_dialog_canceled() -> void:
 
 # -------------------------------------------------------------------------------------------------
 func _on_file_dialog_closed() -> void:
-	_file_dialog.disfile_selected.connect(_on_file_selected_to_save_project)
-	_file_dialog.disclose_requested.connect(_on_file_dialog_closed)
+	#_file_dialog.file_selected.connect(_on_file_selected_to_save_project)
+	#_file_dialog.close_requested.connect(_on_file_dialog_closed)
 	file_dialog_finished.emit()
 
 # -------------------------------------------------------------------------------------------------
@@ -458,6 +462,14 @@ func _on_file_selected_to_save_project(filepath: String) -> void:
 # -------------------------------------------------------------------------------------------------
 func _on_canvas_background_changed(color: Color) -> void:
 	_canvas.set_background_color(color)
+
+# -------------------------------------------------------------------------------------------------
+func _on_open_image(filepath: String) -> void:
+	var img := Image.new()
+	print("opening: ", filepath)
+	var err := img.load(filepath)
+	if err == OK:
+		_canvas.add_image(img)
 
 # -------------------------------------------------------------------------------------------------
 func _on_undo_action() -> void:

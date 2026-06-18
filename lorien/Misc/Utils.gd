@@ -33,15 +33,20 @@ func calculate_rect(start_pos: Vector2, end_pos: Vector2) -> Rect2:
 	return Rect2(start_pos, end_pos - start_pos).abs()
 
 # -------------------------------------------------------------------------------------------------
-func calculte_bounding_boxes(strokes: Array[BrushStroke], margin: float = 0.0) -> Dictionary:
+func calculte_bounding_boxes(strokes: Array[BrushStroke], images: Array[CanvasImage],margin: float = 0.0) -> Dictionary:
 	var result := {}
 	for stroke: BrushStroke in strokes:
 		var top_left := stroke.position + stroke.top_left_pos
 		var bottom_right := stroke.position + stroke.bottom_right_pos
-		var bounding_box := calculate_rect(top_left, bottom_right)
-		if margin > 0:
+		var bounding_box: Rect2 = calculate_rect(top_left, bottom_right)
+		if margin > 0.0:
 			bounding_box = bounding_box.grow(margin)
 		result[stroke] = bounding_box
+	for image: CanvasImage in images:
+		var bounding_box: Rect2 = image.get_bounding_box()
+		if margin > 0.0:
+			bounding_box = bounding_box.grow(margin)
+		result[image] = bounding_box
 	return result
 	
 # -------------------------------------------------------------------------------------------------
